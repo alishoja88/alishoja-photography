@@ -1,5 +1,5 @@
 import { connectToDatabase } from "../../../../../lib/mongodb";
-import { authenticateToken } from "../../../../../auth/jwt";
+import { authenticateToken } from "../../../../../utils/jwt"; 
 import { NextResponse } from "next/server";
 
 export async function GET(req) {
