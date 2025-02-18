@@ -1,0 +1,28 @@
+@keyframes slideInLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.welcome-text {
+  animation: slideInLeft 2s ease-out forwards;
+}
+
+@media (max-width: 768px) {
+  .welcome-text h1 {
+    font-size: 18px;
+    line-height: 12px;
+  }
+}
+@media (max-width: 375px) {
+  .welcome-text h1 {
+    font-size: 14px;
+    line-height: 10px;
+  }
+}
+
