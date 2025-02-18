@@ -4,20 +4,21 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import { useParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 import CustomImage from "@/component/image/customImage";
 import LoadingSpinner from "@/component/loading/loading";
 
 const PhotoModal = dynamic(() => import("@/component/modal/photoModal"), {
   loading: () => <LoadingSpinner />,
-  ssr: false
+  ssr: false,
 });
 
 const CategoryFilter = dynamic(() => import("../component/categoryFilter"), {
-  ssr: false
+  ssr: false,
 });
 
 const GUEST_LIMIT = 24;
+const ITEMS_PER_PAGE = 8;
 
 function CategoryGallery() {
   const { data: session } = useSession();
@@ -29,24 +30,27 @@ function CategoryGallery() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const ITEMS_PER_PAGE = 8;
+  
 
   const { category } = useParams();
 
   const observer = useRef();
-  const lastPhotoElementRef = useCallback(node => {
-    if (loading) return;
-    if (observer.current) observer.current.disconnect();
-    if (!session && photos.length >= GUEST_LIMIT) return;
-    
-    observer.current = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting && hasMore) {
-        setPage(prev => prev + 1);
-      }
-    });
-    
-    if (node) observer.current.observe(node);
-  }, [loading, hasMore, session, photos.length]);
+  const lastPhotoElementRef = useCallback(
+    (node) => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+      if (!session && photos.length >= GUEST_LIMIT) return;
+
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPage((prev) => prev + 1);
+        }
+      });
+
+      if (node) observer.current.observe(node);
+    },
+    [loading, hasMore, session, photos.length]
+  );
 
   const fetchPhotos = useCallback(async () => {
     try {
@@ -63,12 +67,13 @@ function CategoryGallery() {
 
       if (data.success) {
         if (page === 1) {
-          const limitedPhotos = !session && data.photos.length > GUEST_LIMIT 
-            ? data.photos.slice(0, GUEST_LIMIT) 
-            : data.photos;
+          const limitedPhotos =
+            !session && data.photos.length > GUEST_LIMIT
+              ? data.photos.slice(0, GUEST_LIMIT)
+              : data.photos;
           setPhotos(limitedPhotos || []);
         } else {
-          setPhotos(prev => {
+          setPhotos((prev) => {
             const combinedPhotos = [...prev, ...(data.photos || [])];
             if (!session && combinedPhotos.length > GUEST_LIMIT) {
               return combinedPhotos.slice(0, GUEST_LIMIT);
@@ -92,14 +97,11 @@ function CategoryGallery() {
   useEffect(() => {
     setPage(1);
     setPhotos([]);
-    fetchPhotos();
-  }, [category]);
+  }, [category]); 
 
   useEffect(() => {
-    if (page > 1) {
-      fetchPhotos();
-    }
-  }, [page, fetchPhotos]);
+    fetchPhotos();
+  }, [fetchPhotos, page]);
 
   const openModal = (index) => {
     setActiveIndex(index);
@@ -128,10 +130,10 @@ function CategoryGallery() {
                      transform transition-all duration-300 hover:scale-105 hover:shadow-lg"
           >
             <div className="absolute inset-0 bg-[#333435]">
-              <CustomImage 
-                src={photo.src} 
-                alt={photo.alt || "Photo"} 
-                fill 
+              <CustomImage
+                src={photo.src}
+                alt={photo.alt || "Photo"}
+                fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 priority={index < 4}
                 className="w-full h-full"
@@ -157,14 +159,15 @@ function CategoryGallery() {
       {!session && photos.length >= GUEST_LIMIT && (
         <div className="relative mt-12">
           <div className="absolute inset-x-0 -top-40 h-80 bg-gradient-to-b from-transparent to-black/90" />
-          
+
           <div className="relative z-10 flex flex-col items-center py-12 backdrop-blur-lg bg-black/30">
             <div className="max-w-md text-center px-4">
               <h3 className="text-2xl font-bold text-white mb-3">
                 Want to See More?
               </h3>
               <p className="text-gray-200 text-lg mb-6">
-                Sign in to explore our complete collection of stunning photographs
+                Sign in to explore our complete collection of stunning
+                photographs
               </p>
               <Link
                 href="/login"
