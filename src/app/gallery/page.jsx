@@ -128,7 +128,7 @@ function Gallery() {
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 priority={index < 4}
                 className="w-full h-full"
-                mode="contain"
+                mode="cover"
               />
               <div className="absolute bottom-0 left-0 p-2 bg-black/50 backdrop-blur-sm
                            text-xs text-white opacity-0 group-hover:opacity-100

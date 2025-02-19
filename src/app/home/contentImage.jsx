@@ -19,34 +19,36 @@ const ContentImage = () => {
 
   const fadeIn = useSpring({
     opacity: inView ? 1 : 0,
-    transform: inView ? 'translate3d(0,0,0)' : 'translate3d(0,30px,0)',
+    transform: inView ? "translate3d(0,0,0)" : "translate3d(0,30px,0)",
     config: { tension: 170, friction: 26 },
   });
 
   return (
-    <animated.article ref={ref} style={fadeIn} className="px-4 mb-6">
+    <animated.article ref={ref} style={fadeIn} className="px-4 mb-3 sm:mb-6">
       <div className="bg-[#565656] rounded-lg overflow-hidden">
-        <div className="p-6 sm:p-8 md:p-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 md:text-start text-center">
-            <div className="space-y-4 md:space-y-6">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-white">
+        <div className="p-4 sm:p-8 md:p-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 text-center md:text-start">
+            <div className="space-y-3 sm:space-y-6">
+              <h2 className="text-xl sm:text-2xl md:text-4xl lg:text-6xl font-bold text-white">
                 Discover the World Through My Lens
               </h2>
-              <p className="text-base sm:text-lg md:text-lg text-white/80 max-w-md">
+              <p className="text-sm sm:text-base md:text-lg text-white/80 max-w-md mx-auto md:mx-0">
                 Explore the beauty of everyday life captured in fleeting moments.
                 Click below to visit my full gallery and experience the stories each image tells.
               </p>
-              <div className="flex md:justify-start justify-center">
+              <div className="flex justify-center md:justify-start">
                 <Button
                   href="/gallery"
-                  width="50%"
-                  className="justify-center gap-2 bg-[#7209B7] text-white rounded-lg hover:bg-[#B5179E]"
+                  width="auto"
+                  className="text-sm sm:text-base text-center px-3 py-1 sm:px-6 sm:py-2 
+                    justify-center gap-1 bg-[#7209B7] text-white rounded-lg hover:bg-[#B5179E]"
                 >
                   See more Photos
                 </Button>
               </div>
             </div>
-            <div className="relative mt-4 md:mt-0 h-[400px]">
+
+            <div className="relative mt-3 md:mt-0 h-[250px] sm:h-[400px]">
               <Swiper
                 modules={[Navigation, Pagination]}
                 navigation

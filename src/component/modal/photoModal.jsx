@@ -52,6 +52,7 @@ const PhotoModal = ({ photos, activeIndex = 0, onClose }) => {
                   priority={index === activeIndex}
                   className="object-contain"
                   sizes="100vw"
+                  mode="contain"
                 />
                 <div className="absolute bottom-4 left-4 p-2.5 bg-black/50 backdrop-blur-sm
                              rounded-lg text-white z-20">
