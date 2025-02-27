@@ -6,6 +6,7 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import CustomImage from "@/component/image/customImage";
 import LoadingSpinner from "@/component/loading/loading";
+import { siteConfig } from "../config/siteConfig";
 
 const PhotoModal = dynamic(() => import("@/component/modal/photoModal"), {
   loading: () => <LoadingSpinner />,
@@ -15,8 +16,6 @@ const PhotoModal = dynamic(() => import("@/component/modal/photoModal"), {
 const CategoryFilter = dynamic(() => import("./component/categoryFilter"), {
   ssr: false,
 });
-
-const GUEST_LIMIT = 24;
 
 function Gallery() {
   const { data: session } = useSession();
@@ -29,13 +28,16 @@ function Gallery() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const ITEMS_PER_PAGE = 8;
+  
+  const shouldLimitGuest = !session && siteConfig.enableGuestLimit;
+  const GUEST_LIMIT = siteConfig.guestPhotoLimit;
 
   const observer = useRef();
   const lastPhotoElementRef = useCallback(
     (node) => {
       if (loading) return;
       if (observer.current) observer.current.disconnect();
-      if (!session && photos.length >= GUEST_LIMIT) return;
+      if (shouldLimitGuest && photos.length >= GUEST_LIMIT) return;
 
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasMore) {
@@ -45,12 +47,12 @@ function Gallery() {
 
       if (node) observer.current.observe(node);
     },
-    [loading, hasMore, session, photos.length]
+    [loading, hasMore, shouldLimitGuest, photos.length]
   );
 
   const fetchPhotos = useCallback(async () => {
     try {
-      if (!session && photos.length >= GUEST_LIMIT) {
+      if (shouldLimitGuest && photos.length >= GUEST_LIMIT) {
         setHasMore(false);
         return;
       }
@@ -72,7 +74,7 @@ function Gallery() {
             new Set(combinedPhotos.map((photo) => photo._id))
           ).map((id) => combinedPhotos.find((photo) => photo._id === id));
 
-          if (!session && uniqueCombined.length > GUEST_LIMIT) {
+          if (shouldLimitGuest && uniqueCombined.length > GUEST_LIMIT) {
             return uniqueCombined.slice(0, GUEST_LIMIT);
           }
 
@@ -80,7 +82,7 @@ function Gallery() {
         });
 
         setCategories(data.categories || []);
-        setHasMore(data.hasMore && (session || photos.length < GUEST_LIMIT));
+        setHasMore(data.hasMore && (!shouldLimitGuest || photos.length < GUEST_LIMIT));
       } else {
         throw new Error(data.error || "Failed to fetch photos");
       }
@@ -90,7 +92,7 @@ function Gallery() {
     } finally {
       setLoading(false);
     }
-  }, [page, session, photos.length]);
+  }, [page, shouldLimitGuest, photos.length]);
 
   useEffect(() => {
     fetchPhotos();
@@ -147,7 +149,7 @@ function Gallery() {
         </div>
       )}
 
-      {!session && photos.length >= GUEST_LIMIT && (
+      {shouldLimitGuest && photos.length >= GUEST_LIMIT && (
         <div className="relative mt-12">
           <div className="absolute inset-x-0 -top-40 h-80 bg-gradient-to-b from-transparent to-black/90" />
           
