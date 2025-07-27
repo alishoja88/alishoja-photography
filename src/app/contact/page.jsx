@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
 import { Mail, MapPin, Send } from "lucide-react";
-import FormInput from "@/component/formInput/formInput";
-import Button from "@/component/button/button";
+import FormInput from "@/components/ui/formInput/formInput";
+import Button from "@/components/ui/button/button";
 
 export default function Contact() {
   const [formData, setFormData] = useState({

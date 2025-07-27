@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import LoginImage from "./loginImage";
-import AuthForm from "./authForm";
+import LoginImage from "@/components/auth/loginImage";
+import AuthForm from "@/components/auth/authForm";
 
 
 const LoginPage = () => {

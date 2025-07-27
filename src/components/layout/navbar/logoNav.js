@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Logo from "../../../public/svg/logo/AliLogo.svg";
+import Logo from "../../../../public/svg/logo/AliLogo.svg";
 
 const LogoNav = () => {
   return (

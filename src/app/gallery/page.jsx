@@ -4,16 +4,16 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import CustomImage from "@/component/image/customImage";
-import LoadingSpinner from "@/component/loading/loading";
+import CustomImage from "@/components/ui/image/customImage";
+import LoadingSpinner from "@/components/ui/loading/loading";
 import { siteConfig } from "../config/siteConfig";
 
-const PhotoModal = dynamic(() => import("@/component/modal/photoModal"), {
+const PhotoModal = dynamic(() => import("@/components/ui/modal/photoModal"), {
   loading: () => <LoadingSpinner />,
   ssr: false,
 });
 
-const CategoryFilter = dynamic(() => import("./component/categoryFilter"), {
+const CategoryFilter = dynamic(() => import("@/components/gallery/component/categoryFilter"), {
   ssr: false,
 });
 

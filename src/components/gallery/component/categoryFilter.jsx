@@ -1,6 +1,6 @@
 "use client";
 
-import Button from "@/component/button/button";
+import Button from "@/components/ui/button/button";
 import { useRouter, usePathname } from "next/navigation";
 
 const CategoryFilter = ({ categories = [], activeCategory = "all" }) => {

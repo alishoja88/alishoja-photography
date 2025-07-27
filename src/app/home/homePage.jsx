@@ -2,12 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import CustomImage from "../../component/image/customImage";
+import CustomImage from "../../components/ui/image/customImage";
 import HomeImage from "../../../image/HomeImage.JPG";
-import WelcomeText from "./welcomeText";
-import ContentImage from "./contentImage";
-import LookingAround from "./lookingAround";
-import ShortStory from "./shortStory";
+import WelcomeText from "../../components/home/welcomeText";
+import SectionCard from "../../components/home/sectionCard";
+import ShortStory from "../../components/home/shortStory";
+import { image } from "../../../lib/images";
+import LookContent from "../../../public/images/people90.JPEG";
 
 const HomePage = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -52,16 +53,40 @@ const HomePage = () => {
           </div>
         </section>
 
-        <section className="px-4 mt-14">
+        <section className="px-2 sm:px-4 mt-8 sm:mt-12 md:mt-16">
           <ShortStory />
         </section>
 
-        <section className="px-4 mt-14">
-        <ContentImage />
+        {/* Gallery Slider Section */}
+        <section className="px-2 sm:px-4 mt-8 sm:mt-12 md:mt-16">
+          <SectionCard
+            title="Discover the World Through My Lens"
+            description="Explore the beauty of everyday life captured in fleeting moments. Click below to visit my full gallery and experience the stories each image tells."
+            buttonText="See more Photos"
+            buttonHref="/gallery"
+            backgroundColor="#565656"
+            textColor="text-white"
+            images={image}
+            imageAlt="Gallery showcase"
+            imageFirst={true}
+            animationDelay={0}
+          />
         </section>
 
-        <section className="px-4 mt-14 mb-14">
-        <LookingAround />
+        {/* Street Photography Section */}
+        <section className="px-2 sm:px-4 mt-8 sm:mt-12 md:mt-16 mb-12 sm:mb-16 md:mb-24">
+          <SectionCard
+            title="Looking Around Through My Camera"
+            description="Discover the art of photography through my lens. Each image tells a unique story, capturing moments that would otherwise pass unnoticed."
+            buttonText="See more Photos"
+            buttonHref="/gallery"
+            backgroundColor="#4CC9F0"
+            textColor="text-black"
+            singleImage={LookContent}
+            imageAlt="Street photography showcasing unique perspectives and moments captured through the lens"
+            imageFirst={true}
+            animationDelay={200}
+          />
         </section>
       </article>
     </main>

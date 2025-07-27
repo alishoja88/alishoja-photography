@@ -1,4 +1,4 @@
-import CustomImage from "@/component/image/customImage";
+import CustomImage from "@/components/ui/image/customImage";
 import alipro from "../../../image/profile/profile02.JPEG";
 
 function Profile() {

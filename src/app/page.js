@@ -15,7 +15,7 @@ export const metadata = {
 
 export default function Home() {
  return (
-   <div className="w-[90%] mx-auto">
+   <div className="w-full sm:w-[95%] md:w-[90%] mx-auto mb-8 sm:mb-12 md:mb-16">
      <article>
        <HomePage />
      </article>

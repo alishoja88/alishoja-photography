@@ -3,8 +3,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import FormInput from "@/component/formInput/formInput";
-import Button from "@/component/button/button";
+import FormInput from "@/components/ui/formInput/formInput";
+import Button from "@/components/ui/button/button";
 import SocialButton from "./socialButton";
 import Image from "next/image";
 

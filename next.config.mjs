@@ -1,10 +1,8 @@
 /**@type {import('next').NextConfig} */
 const nextConfig = {
-  env: {
-    MONGODB_URI: process.env.MONGODB_URI,
-    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
-  },
+  // Keep standalone for Docker optimization but remove env bundling
+  output: 'standalone',
+  // Remove env bundling - let Next.js read from process.env at runtime
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
